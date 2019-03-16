@@ -9,8 +9,8 @@ int main()
     char mychar = 'f';
     freqCounter freqTable;
 
-    freqTable.setFreq(&freq);
-    freqTable.setChar(&mychar);
+    freqTable.setFreq(freq);
+    freqTable.setChar(mychar);
 
     cout << freqTable.getChar() << ": " << freqTable.getFreq() << endl;
 
@@ -23,13 +23,33 @@ int main()
     char * mybuffer = new char[length];
 
     mybuffer = mybitstream.getBuffer();
-    cout << "PRINTING BUFFER: \n";
-    for(int i=0; i<length; i++)
+    //cout << "PRINTING BUFFER: \n";
+    //for(int i=0; i<length; i++)
+    //{
+   // cout << mybuffer[i];
+
+   // }
+    freqCounter * newTable = freqTable.generateTable(length, mybuffer);
+
+    //freqCounter *newTable = freqTable.getTable();
+    //freqCounter* newTable = new freqCounter[255];
+
+    //copyover array of objects
+
+
+    for(int i=0; i <length; i++)
     {
-    cout << mybuffer[i];
+        //newTable[i] = freqTable.getTable(i);
 
     }
-    freqTable.generateTable(length, mybuffer);
+
+    for(int i=0; i<255; i++)
+    {
+        if(newTable[i].getFreq() != 0){
+        cout << newTable[i].getChar() << " : ";
+        cout << newTable[i].getFreq() << endl;
+       }
+    }
 
     cout << "\n********END PROGRAM********" << endl;
 

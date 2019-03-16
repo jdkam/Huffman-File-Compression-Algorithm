@@ -12,14 +12,17 @@ a "frequency table" using an array
 using namespace std;
 
 class freqCounter
-{
+{   
     //private members
-    char *character; 
-    int *freq;
+    char character;
+    int freq;
+    freqCounter *mytable;
 
     public:
 
     freqCounter();
+
+    //freqCounter(const freqCounter & f);
 
     //getters
     char getChar() const;
@@ -27,11 +30,15 @@ class freqCounter
 
 
     //setters
-    void setChar( char *aChar); //do we need this? if reading char from file?
-    void setFreq( int *aFreq);
+    void setChar(const char aChar); //do we need this? if reading char from file?
+    void setFreq( const int aFreq);
 
     //generates the frequency table by reading
     //in the buffer and updating freq of each ascii char
-    void generateTable(int length, char *abuffer);
+    freqCounter* generateTable(int length, char *abuffer);
 
+    freqCounter* getTable();
+    
+
+	
 };
