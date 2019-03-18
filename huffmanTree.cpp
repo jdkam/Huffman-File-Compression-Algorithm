@@ -28,7 +28,16 @@ int huffmanTree::getFreq() const
     return freq;
 }
 
-void convertToHuff(freqCounter *newTable, int length);
+huffmanTree* makeTree(PriorityQueue<huffmanTree> huffTree, int length){
+
+    //called recursively
+    
+
+
+
+
+}
+
 
 void huffmanTree::buildTree(freqCounter *newTable, int length)
 {
@@ -48,97 +57,143 @@ void huffmanTree::buildTree(freqCounter *newTable, int length)
         }
     }
 
-    huffmanTree t;
-    for (int i = 0; i < length; i++)
-    {
+    //  huffmanTree t;
+    //  for (int i = 0; i < length; i++)
+    //  {
+
+    //          t = huffTree.peek();
+    //         cout << t.getData() << endl;
+    //          huffTree.dequeue();
+
+    // }
+
+    // huffmanTree first, second;
+    // int sum = 0;
+    // //huffmanTree *internalNode = new huffmanTree();
+    // huffmanTree *pointerNode;
+
+    // for (int i = 0; i < length + 1; i++)
+    // {
+    //         huffmanTree *internalNode = new huffmanTree();
+    //         first = huffTree.peek();
+    //         huffTree.dequeue();
+    //         length--;
+
+    //         //cout << first.getData() << endl;
+    //         second = huffTree.peek();
+    //         huffTree.dequeue();
+    //         length--;
+    //         //cout << second.getData() << endl;
+    //         if (first.getFreq() == second.getFreq() || first.getFreq() < second.getFreq())
+    //         {
+    //             sum = first.getFreq() + second.getFreq();
+
+    //             internalNode->setFreq(sum);
+    //             internalNode->setData('x'); //
+
+    //             huffmanTree *leftNode = new huffmanTree();
+    //             huffmanTree *rightNode = new huffmanTree();
+
+    //             leftNode->left = NULL;
+    //             leftNode->right = NULL;
+
+    //             rightNode->left = NULL;
+    //             rightNode->right = NULL;
+
+    //             leftNode->setData(first.getData());
+    //             leftNode->setFreq(first.getFreq());
+    //             //cout << first.getData() << endl;
+    //             //cout << first.getFreq() << endl;
+
+    //             rightNode->setData(second.getData());
+    //             rightNode->setFreq(second.getFreq());
+    //             //cout << second.getData() << endl;
+
+    //             internalNode->left = leftNode;
+    //             internalNode->right = rightNode;
+
+    //             cout << "internal Node left child:" << internalNode->left->getData() << endl;
+    //             cout << "internal Node right child: " << internalNode->right->getData() << endl;
+
+    //             huffTree.enqueue(*internalNode);
+    //             length++;
+    //         }
+    //         else if (first.getFreq() > second.getFreq())
+    //         {
+    //             sum = first.getFreq() + second.getFreq();
+
+    //             internalNode->setFreq(sum);
+    //             internalNode->setData('x'); //
+
+    //             huffmanTree *leftNode = new huffmanTree();
+    //             huffmanTree *rightNode = new huffmanTree();
+
+    //             leftNode->left = NULL;
+    //             leftNode->right = NULL;
+
+    //             rightNode->left = NULL;
+    //             rightNode->right = NULL;
+
+    //             rightNode->setData(first.getData());
+    //             rightNode->setFreq(first.getFreq());
+
+    //             leftNode->setData(second.getData());
+    //             leftNode->setFreq(second.getFreq());
+
+    //             internalNode->left = leftNode;
+    //             internalNode->right = rightNode;
+
+    //             huffTree.enqueue(*internalNode);
+    //             length++;
+    //         }
+    //         pointerNode = internalNode;
         
-            t = huffTree.peek();
-            cout << t.getData() << endl;
-            huffTree.dequeue();
-        
-    }
+    // }
+    // cout << pointerNode->left->right->getData() << " : " << pointerNode->left->right->getFreq() << endl;
 
-    huffmanTree first, second;
-    int sum = 0;
-    huffmanTree *internalNode = new huffmanTree();
+    // huffmanTree test;
 
-    for (int i = 0; i < length + 1; i++)
-    {
-        first = huffTree.peek();
-        huffTree.dequeue();
-        length--;
+    // test.print2D(pointerNode);
 
-        //cout << first.getData() << endl;
-        second = huffTree.peek();
-        huffTree.dequeue();
-        length--;
-        //cout << second.getData() << endl;
-        if (first.getFreq() == second.getFreq() || first.getFreq() < second.getFreq())
-        {
-            sum = first.getFreq() + second.getFreq();
+    // /*
+    // for (int i = 0; i < length; i++)
+    // {
+    //     test = huffTree.peek();
 
-            internalNode->setFreq(sum);
-            internalNode->setData('x'); //
+    //     cout << test.getData() << " : " << test.getFreq() << endl;
 
-            huffmanTree *leftNode = new huffmanTree();
-            huffmanTree *rightNode = new huffmanTree();
+    //     huffTree.dequeue();
+    //     length--;
+    // }
 
-            leftNode->setData(first.getData());
-            leftNode->setFreq(first.getFreq());
+}
 
-            rightNode->setData(second.getData());
-            rightNode->setFreq(second.getFreq());
+void huffmanTree::print2DUtil(huffmanTree *root, int space)
+{
+    // Base case
+    if (root == NULL)
+        return;
 
-            internalNode->left = leftNode;
-            internalNode->right = rightNode;
+    // Increase distance between levels
+    space += COUNT;
 
-            //cout << internalNode->left->getData();
+    // Process right child first
+    print2DUtil(root->right, space);
 
-            huffTree.enqueue(*internalNode);
-            length++;
-        }
-        else if(first.getFreq() > second.getFreq())
-        {
-            sum = first.getFreq() + second.getFreq();
+    // Print current node after space
+    // count
+    cout << endl;
+    for (int i = COUNT; i < space; i++)
+        cout << " ";
+    cout << root->data << "\n";
 
-            internalNode->setFreq(sum);
-            internalNode->setData('x'); //
+    // Process left child
+    print2DUtil(root->left, space);
+}
 
-            huffmanTree *leftNode = new huffmanTree();
-            huffmanTree *rightNode = new huffmanTree();
-
-            rightNode->setData(first.getData());
-            rightNode->setFreq(first.getFreq());
-
-            leftNode->setData(second.getData());
-            leftNode->setFreq(second.getFreq());
-
-            internalNode->left = leftNode;
-            internalNode->right = rightNode;
-
-            huffTree.enqueue(*internalNode);
-            length++;
-
-            
-        }
-
-    }
-       //cout << internalNode->left->right->getData() << endl;
-
-
-    huffmanTree test;
-    
-
-    /*
-    for (int i = 0; i < length; i++)
-    {
-        test = huffTree.peek();
-
-        cout << test.getData() << " : " << test.getFreq() << endl;
-
-        huffTree.dequeue();
-        length--;
-    }
-*/
-
+// Wrapper over print2DUtil()
+void huffmanTree::print2D(huffmanTree *root)
+{
+    // Pass initial space count as 0
+    print2DUtil(root, 0);
 }

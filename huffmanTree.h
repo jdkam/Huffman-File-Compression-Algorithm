@@ -1,6 +1,7 @@
 #include <iostream>
 #include "priorityQueue.h"
 #include "frequencyCounter.h"
+#define COUNT 10
 
 
 using namespace std;
@@ -31,9 +32,16 @@ class huffmanTree{
     void setFreq(const int afreq);
     int getFreq() const;
 
+    huffmanTree* makeTree(PriorityQueue<huffmanTree> huffTree, int length);
+
     //compute huffman code
 
     //obtain huffman code
+
+
+    void print2DUtil(huffmanTree *root, int space);
+
+    void print2D(huffmanTree *root);
 
 
 bool operator < (const huffmanTree& f)
@@ -52,3 +60,5 @@ bool operator < (const huffmanTree& f)
         return false;
     }
 };
+
+   
