@@ -12,10 +12,10 @@ bitstream::bitstream()
     bufferLength = 0;
 }
 
-void bitstream::readIn()
+void bitstream::readIn(char* a)
 {
 
-    std::ifstream is("test.txt", std::ifstream::binary);
+    std::ifstream is(a, std::ifstream::binary);
     if (is)
     {
         // get length of file:
@@ -101,4 +101,8 @@ char *bitstream::getBuffer(){
 
 void bitstream::setBuffer( char *aBuffer){
     buffer = aBuffer;
+}
+
+bitstream::~bitstream(){
+    delete[] buffer;
 }

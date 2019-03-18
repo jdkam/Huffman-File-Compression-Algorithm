@@ -7,7 +7,7 @@ freqCounter::freqCounter()
 {
     character = 0;
     freq = 0;
-    //freqCounter *mytable = new freqCounter[255];
+    uniqueLength = 0;
 
 }
 
@@ -17,23 +17,23 @@ freqCounter::freqCounter()
  //   freq = f.getFreq();
 //}
 
-char freqCounter::getChar() const
-{
+char freqCounter::getChar() const{
     return character;
 }
 
-int freqCounter::getFreq() const
-{
+int freqCounter::getFreq() const{
     return freq;
 }
 
-void freqCounter::setFreq(const int aFreq)
-{
+int freqCounter::getUniqueLength() const{
+    return uniqueLength;
+}
+
+void freqCounter::setFreq(const int aFreq){
     freq = aFreq;
 }
 
-void freqCounter::setChar(const char aChar)
-{
+void freqCounter::setChar(const char aChar){
     character = aChar;
 }
 
@@ -41,20 +41,10 @@ freqCounter *freqCounter::getTable(){
     return mytable;
 }
 
-freqCounter* freqCounter::generateTable(int length, char *abuffer)
-{
-
-    //need array for ascii
-    //need array for freq values
-
-    //char *ascii = new char[255];
-    //int *freqValue = new int[255];
+freqCounter* freqCounter::generateTable(int length, char *abuffer){
+    
     freqCounter *mytable= new freqCounter[255];
 
-    //mytable[0].setChar('a');
-    //mytable[0].setFreq(1);
-
-    //cout << mytable[0].getChar() << " : " << mytable[0].getFreq() << endl; 
     //initialize ascii values
     //initializing freq table to 0
     for (int i = 0; i < 255; i++)
@@ -63,13 +53,6 @@ freqCounter* freqCounter::generateTable(int length, char *abuffer)
         mytable[i].setFreq(0);
         
     }
-
-   
-    //for(int k=0; k < 255; k++){
-     //   cout << mytable->character[k] << " : " << mytable->freq[k] << endl;
-    //}
-
-    //need an array of objects?
 
     char thisChar;
     int asciiValue = 0;
@@ -84,9 +67,15 @@ freqCounter* freqCounter::generateTable(int length, char *abuffer)
         mytable[asciiValue].setFreq(mytable[asciiValue].getFreq()+1);
         mytable[asciiValue].setChar(thisChar);
 
+        if(mytable[asciiValue].getFreq() == 1)
+        {
+            uniqueLength++;
+        }
+
     }
 
     //print freqTable
+    /*
     cout << "\nPRINTING FREQUENCY TABLE\n";
     for(int i=0; i<255; i++)
     {
@@ -95,6 +84,8 @@ freqCounter* freqCounter::generateTable(int length, char *abuffer)
         cout << mytable[i].getFreq() << endl;
        }
     }
+    */
 
     return mytable;
 }
+

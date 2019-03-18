@@ -1,59 +1,35 @@
 #include "frequencyCounter.h"
 #include "bitstream.h"
+#include "priorityQueue.h"
+#include "huffmanTree.h"
 #include <iostream>
 
-int main()
+using namespace std;
+PriorityQueue<freqCounter> myQueue;
+
+int main(int argc, char *argv[])
 {
-    using namespace std;
-    int freq = 5;
-    char mychar = 'f';
+    huffmanTree myTree;
     freqCounter freqTable;
-
-    freqTable.setFreq(freq);
-    freqTable.setChar(mychar);
-
-    cout << freqTable.getChar() << ": " << freqTable.getFreq() << endl;
 
     bitstream mybitstream;
 
-    mybitstream.readIn(); //reads in a file in a block
+    mybitstream.readIn(argv[1]); //reads in a file in a block
 
     int length = mybitstream.getBufferLength();
     cout << "\nBuffer length: " << length << endl;
-    char * mybuffer = new char[length];
+    char *mybuffer = new char[length];
 
     mybuffer = mybitstream.getBuffer();
-    //cout << "PRINTING BUFFER: \n";
-    //for(int i=0; i<length; i++)
-    //{
-   // cout << mybuffer[i];
 
-   // }
-    freqCounter * newTable = freqTable.generateTable(length, mybuffer);
+    freqCounter *newTable = freqTable.generateTable(length, mybuffer);
 
-    //freqCounter *newTable = freqTable.getTable();
-    //freqCounter* newTable = new freqCounter[255];
-
-    //copyover array of objects
+    int tableLength = freqTable.getUniqueLength();
 
 
-    for(int i=0; i <length; i++)
-    {
-        //newTable[i] = freqTable.getTable(i);
-
-    }
-
-    for(int i=0; i<255; i++)
-    {
-        if(newTable[i].getFreq() != 0){
-        cout << newTable[i].getChar() << " : ";
-        cout << newTable[i].getFreq() << endl;
-       }
-    }
-
-    cout << "\n********END PROGRAM********" << endl;
+    myTree.buildTree(newTable, tableLength);
 
 
+    
     return (0);
-
 }

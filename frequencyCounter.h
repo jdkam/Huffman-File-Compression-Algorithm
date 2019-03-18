@@ -11,11 +11,11 @@ a "frequency table" using an array
 
 using namespace std;
 
-class freqCounter
-{   
+class freqCounter{   
     //private members
     char character;
     int freq;
+    int uniqueLength;
     freqCounter *mytable;
 
     public:
@@ -27,17 +27,34 @@ class freqCounter
     //getters
     char getChar() const;
     int getFreq() const;
+    int getUniqueLength() const;
 
 
     //setters
     void setChar(const char aChar); //do we need this? if reading char from file?
     void setFreq( const int aFreq);
-
+    
     //generates the frequency table by reading
     //in the buffer and updating freq of each ascii char
     freqCounter* generateTable(int length, char *abuffer);
 
     freqCounter* getTable();
+
+    bool operator < (const freqCounter& f)
+    {
+        if(this->freq < f.getFreq())
+        return true;
+        else
+        return false;
+    }
+
+    bool operator >(const freqCounter &f){
+
+        if(this->freq > f.getFreq())
+        return true;
+        else 
+        return false;
+    }
     
 
 	

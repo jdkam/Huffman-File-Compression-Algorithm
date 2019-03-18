@@ -24,6 +24,7 @@ public:
     //each bit sequence is unique (class invariant)
 
     bitstream();
+    ~bitstream(); //destructor
 
     int getBufferLength() const;
     void setBufferLength(const int aLength);
@@ -31,7 +32,7 @@ public:
     char *getBuffer();
     void setBuffer(char *aBuffer);
 
-    void readIn(); //reads input and updates freq of characters
+    void readIn(char *a); //reads input and updates freq of characters
 
     bool writeOut();
 

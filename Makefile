@@ -1,10 +1,10 @@
 all: test
 
-test: Testdriver.o frequencyCounter.o bitstream.o
-	g++ -Wall -o test Testdriver.o bitstream.o frequencyCounter.o
+test: Testdriver.o frequencyCounter.o bitstream.o priorityQueue.h Node.h EmptyDataCollectionException.o huffmanTree.o
+	g++ -Wall -o test Testdriver.o bitstream.o frequencyCounter.o EmptyDataCollectionException.o huffmanTree.o
 
 Testdriver.o: Testdriver.cpp
-	g++ -c Testdriver.cpp
+	g++ -w -c Testdriver.cpp
 
 frequencyCounter.o: frequencyCounter.cpp frequencyCounter.h
 	g++ -c frequencyCounter.cpp
@@ -12,6 +12,12 @@ frequencyCounter.o: frequencyCounter.cpp frequencyCounter.h
 bitstream.o: bitstream.h bitstream.cpp
 	g++ -c bitstream.cpp
 
+EmptyDataCollectionException.o: EmptyDataCollectionException.h EmptyDataCollectionException.cpp
+	g++ -c EmptyDataCollectionException.cpp
+
+huffmanTree.o: huffmanTree.h huffmanTree.cpp 
+	g++ -w -c huffmanTree.cpp
+
 
 clean:
-	rm -f sim *.o
+	rm -f test *.o
