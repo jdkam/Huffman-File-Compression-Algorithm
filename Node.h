@@ -21,10 +21,6 @@ public:
 	// Public data members - Why are the data members public?
 	T data;     // The data in the node
 	Node<T>* next;   // Pointer to next node
-	Node<T>* lchild;
-	Node<T>* rchild;
-	char character;
-	int freq;
 
 	// Constructors
 	Node();
@@ -38,7 +34,6 @@ Node<T>::Node()
 {
 	data = 0;
 	next = NULL;
-	freq = 0;
 }
 
 template <class T>

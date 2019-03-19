@@ -30,18 +30,18 @@ class huffmanTree{
     char getData() const;
 
     void setFreq(const int afreq);
-    int getFreq() const;
 
-    huffmanTree* makeTree(PriorityQueue<huffmanTree> huffTree, int length);
+    int getFreq() const;
 
     //compute huffman code
 
     //obtain huffman code
 
-
     void print2DUtil(huffmanTree *root, int space);
 
     void print2D(huffmanTree *root);
+
+    huffmanTree* formNodes(huffmanTree first, huffmanTree second);
 
 
 bool operator < (const huffmanTree& f)
