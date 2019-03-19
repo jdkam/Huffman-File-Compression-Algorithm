@@ -27,7 +27,7 @@ class huffmanTree
     Node *root;
 
    
- void code(Node* root, char *s,unsigned n,std::string str[256]);
+ void code(Node* root, char *s,unsigned n,std::string str[]);
   public:
 
     huffmanTree(const huffmanTree &a, const huffmanTree &b);

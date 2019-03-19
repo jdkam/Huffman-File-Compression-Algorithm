@@ -1,7 +1,7 @@
-all: test
+all: huff
 
-test: Testdriver.o frequencyCounter.o bitstream.o priorityQueue.h Node.h EmptyDataCollectionException.o huffmanTree.o
-	g++ -Wall -o test Testdriver.o bitstream.o frequencyCounter.o EmptyDataCollectionException.o huffmanTree.o
+huff: Testdriver.o frequencyCounter.o bitstream.o priorityQueue.h Node.h EmptyDataCollectionException.o huffmanTree.o
+	g++ -Wall -o huff Testdriver.o bitstream.o frequencyCounter.o EmptyDataCollectionException.o huffmanTree.o
 
 Testdriver.o: Testdriver.cpp
 	g++ -w -c Testdriver.cpp
@@ -20,4 +20,4 @@ huffmanTree.o: huffmanTree.h huffmanTree.cpp
 
 
 clean:
-	rm -f test *.o
+	rm -f huff *.o

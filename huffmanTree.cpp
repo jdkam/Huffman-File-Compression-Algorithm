@@ -113,7 +113,7 @@ char huffmanTree::getC(std::ifstream& in, bool* done){
 
 }
 //Used to put the poppulate the tree
-void huffmanTree::code(huffmanTree::Node* root, char* s,unsigned n,std::string table[256]) {
+void huffmanTree::code(huffmanTree::Node* root, char* s,unsigned n,std::string table[]) {
     if(root->getVal() != 0){
         std::string code;
         s[n] = 0;

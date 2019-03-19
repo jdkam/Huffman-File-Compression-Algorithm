@@ -63,7 +63,7 @@ void bitstream::readIn(char* a)
     }
 }
 
-void bitstream::writeOut(string code)
+void bitstream::writeOut(string code, string* tableBuffer, int tableLength)
 {
     //std::ifstream infile("test.txt", std::ifstream::binary);
     std::ofstream outfile("compressed.txt");
@@ -88,6 +88,12 @@ void bitstream::writeOut(string code)
     if(outfile.is_open())
     {
         outfile << code;
+        
+        outfile << endl;
+        for(int i=0; i<tableLength; i++){
+            outfile << tableBuffer[i];
+            outfile << endl;
+        }
     }
 
     outfile.close();
