@@ -5,6 +5,8 @@
 
 #include "frequencyCounter.h"
 
+using namespace std;
+
 class bitstream
 {
     char * buffer;
@@ -34,6 +36,6 @@ public:
 
     void readIn(char *a); //reads input and updates freq of characters
 
-    bool writeOut();
+    void writeOut(string code);
 
 };

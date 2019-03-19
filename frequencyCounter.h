@@ -16,6 +16,7 @@ class freqCounter{
     char character;
     int freq;
     int uniqueLength;
+    string codeWord;
     freqCounter *mytable;
 
     public:
@@ -33,6 +34,9 @@ class freqCounter{
     //setters
     void setChar(const char aChar); //do we need this? if reading char from file?
     void setFreq( const int aFreq);
+
+    void setCodeWord(const string astring);
+    std::string getCodeWord();
     
     //generates the frequency table by reading
     //in the buffer and updating freq of each ascii char

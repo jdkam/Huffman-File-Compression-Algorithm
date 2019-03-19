@@ -8,6 +8,7 @@ freqCounter::freqCounter()
     character = 0;
     freq = 0;
     uniqueLength = 0;
+    codeWord = "";
 
 }
 
@@ -37,17 +38,25 @@ void freqCounter::setChar(const char aChar){
     character = aChar;
 }
 
+void freqCounter::setCodeWord(const string astring){
+    codeWord = astring;
+}
+
+string freqCounter::getCodeWord(){
+    return codeWord;
+}
+
 freqCounter *freqCounter::getTable(){
     return mytable;
 }
 
 freqCounter* freqCounter::generateTable(int length, char *abuffer){
     
-    freqCounter *mytable= new freqCounter[255];
+    freqCounter *mytable= new freqCounter[256];
 
     //initialize ascii values
     //initializing freq table to 0
-    for (int i = 0; i < 255; i++)
+    for (int i = 0; i < 256; i++)
     {
         mytable[i].setChar(i);
         mytable[i].setFreq(0);

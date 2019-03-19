@@ -1,64 +1,52 @@
-#include <iostream>
-#include "priorityQueue.h"
-#include "frequencyCounter.h"
-#define COUNT 10
+#pragma once
+#include <string>
+#include <fstream>
 
+class huffmanTree
+{
 
-using namespace std;
-
-class huffmanTree{
-
-    char data;
-    int freq;
-
-    huffmanTree * left, *right;
+  private:
+    unsigned weight, height;
     
 
-    public:
-
-    huffmanTree();
-    //build tree
-    //grab 2 char, create parent node with freq = sum of two node freq
-    //peek, dequeue, peek, dequeue
-    //calculate parent
-    //enqueue parent into priority queue
-    //stop when no more char to be queued
-
-    void buildTree(freqCounter *newTable, int length);
-
-    void setData(const char adata);
-    char getData() const;
-
-    void setFreq(const int afreq);
-
-    int getFreq() const;
-
-    //compute huffman code
-
-    //obtain huffman code
-
-    void print2DUtil(huffmanTree *root, int space);
-
-    void print2D(huffmanTree *root);
-
-    huffmanTree* formNodes(huffmanTree first, huffmanTree second);
-
-
-bool operator < (const huffmanTree& f)
+    class Node
     {
-        if(this->freq < f.getFreq())
-        return true;
-        else
-        return false;
-    }
+      private:
+        Node *left;
+        Node *right;
+        char val;
 
-    bool operator >(const huffmanTree &f){
+      public:
+        Node(char val);
+        char getVal();
+        Node *getleft();
+        Node *getright();
+        void attachNodes(Node *a, Node *b);
+    };
 
-        if(this->freq > f.getFreq())
-        return true;
-        else 
-        return false;
-    }
-};
+    Node *root;
 
    
+ void code(Node* root, char *s,unsigned n,std::string str[256]);
+  public:
+
+    huffmanTree(const huffmanTree &a, const huffmanTree &b);
+
+    huffmanTree(unsigned weight, char c);
+
+    huffmanTree();
+
+    Node* returnRoot();
+
+    char getC(std::ifstream &in, bool *done);
+
+    void makeCodeTable(std::string *table);
+
+    friend bool operator<(const huffmanTree &a, const huffmanTree &b);
+    friend bool operator>(const huffmanTree &a, const huffmanTree &b);
+
+    unsigned getWeight();
+
+
+
+};

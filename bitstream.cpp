@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <istream>
+#include "frequencyCounter.h"
 
 using namespace std;
 
@@ -28,9 +29,12 @@ void bitstream::readIn(char* a)
 
         char *buffer = new char[length]; //create a dynamic array of length of the file
 
+        
+
         std::cout << "Reading " << length << " characters... ";
         // read data as a block:
         is.read(buffer, length);
+
 
         if (is)
         {
@@ -59,32 +63,37 @@ void bitstream::readIn(char* a)
     }
 }
 
-bool bitstream::writeOut()
+void bitstream::writeOut(string code)
 {
-    std::ifstream infile("test.txt", std::ifstream::binary);
-    std::ofstream outfile("new.txt", std::ofstream::binary);
+    //std::ifstream infile("test.txt", std::ifstream::binary);
+    std::ofstream outfile("compressed.txt");
 
     // get size of file
-    infile.seekg(0, infile.end);
-    long size = infile.tellg();
-    infile.seekg(0);
+    //infile.seekg(0, infile.end);
+    //long size = infile.tellg();
+    //infile.seekg(0);
 
     // allocate memory for file content
-    char *buffer = new char[size];
+   // char *buffer = new char[size];
 
     // read content of infile
-    infile.read(buffer, size);
+    //infile.read(buffer, size);
 
     // write to outfile
-    outfile.write(buffer, size);
+    //outfile.write(code, code.size());
 
     // release dynamically-allocated memory
-    delete[] buffer;
+    //delete[] buffer;
+
+    if(outfile.is_open())
+    {
+        outfile << code;
+    }
 
     outfile.close();
-    infile.close();
+   // infile.close();
 
-    return true;
+    return;
 }
 
 int bitstream::getBufferLength() const{
