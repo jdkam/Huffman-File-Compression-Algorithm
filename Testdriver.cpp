@@ -85,8 +85,10 @@ int main(int argc, char *argv[])
 
         string *tableBuffer = new string[512];
 
-        int compressSize = code.size()/8;
 
+        double charsize=0;
+        double codesize =0;
+        double totalcompressSize=0;
         //transfer frequency table to a printable string
         int j = 0;
         for (int i = 0; i < 256; i++)
@@ -96,20 +98,28 @@ int main(int argc, char *argv[])
             if (newTable[i].getFreq() != 0)
             {
                 c = newTable[i].getChar();
-                compressSize +=2;
                 tableBuffer[j] += c;
                 tableBuffer[j] += codeTable[i];
+                charsize++;
+                codesize += codeTable[i].size();
+                //cout << "total char size: " << charsize << "bytes" << endl;
+                //cout << "current code size: " << codeTable[i].size() << "bits" << endl;
 
                 //cout << newTable[i].getChar() << " : " << newTable[i].getFreq() << endl;
                 //cout << tableBuffer;
                 j++;
             }
         }
+        //cout << "total code size: " << codesize << endl;
+        //cout << "total char size" << charsize << endl;
+        codesize = double(code.size()/8) + double(codesize/8) ; //convert bytes
+        totalcompressSize = codesize + charsize;
+        //cout << "total code size: " << codesize << " bytes" << endl;
 
         //cout << tableBuffer[1][1] << endl;
 
         mybitstream.writeOut(code, tableBuffer, tableLength);
-        cout << "Compressed size -> " << compressSize << " bytes\n";
+        cout << "Compressed size -> " << totalcompressSize << " bytes\n";
 
     }
     else if (argv[1][0] == '-' && argv[1][1] == 'd')

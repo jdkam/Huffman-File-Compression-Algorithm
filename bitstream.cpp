@@ -66,7 +66,7 @@ void bitstream::readIn(char* a)
 void bitstream::writeOut(string code, string* tableBuffer, int tableLength)
 {
     //std::ifstream infile("test.txt", std::ifstream::binary);
-    std::ofstream outfile("compressed.txt");
+    std::ofstream outfile("compressed.txt", ios::binary | ios::ate);
 
     // get size of file
     //infile.seekg(0, infile.end);
@@ -85,15 +85,22 @@ void bitstream::writeOut(string code, string* tableBuffer, int tableLength)
     // release dynamically-allocated memory
     //delete[] buffer;
 
+    int bits;
+    int size=0;
     if(outfile.is_open())
     {
         outfile << code;
-        
+        bits = code.size();
+
         outfile << endl;
         for(int i=0; i<tableLength; i++){
             outfile << tableBuffer[i];
+            size += tableBuffer[i].size();
+            
             outfile << endl;
         }
+        cout << "output file size: " <<  size << endl;
+       
     }
 
     outfile.close();
