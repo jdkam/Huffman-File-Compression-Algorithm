@@ -31,14 +31,14 @@ void bitstream::readIn(char* a)
 
         
 
-        std::cout << "Reading " << length << " characters... ";
+        //std::cout << "Reading " << length << " characters... ";
         // read data as a block:
         is.read(buffer, length);
 
 
         if (is)
         {
-            std::cout << "all characters read successfully.";
+            //std::cout << "all characters read successfully.";
             setBuffer(buffer);
         }
         else
@@ -63,10 +63,10 @@ void bitstream::readIn(char* a)
     }
 }
 
-void bitstream::writeOut(string code, string* tableBuffer, int tableLength)
+void bitstream::writeOut(string code, string* tableBuffer, int tableLength, char* s)
 {
     //std::ifstream infile("test.txt", std::ifstream::binary);
-    std::ofstream outfile("compressed.txt", ios::binary | ios::ate);
+    std::ofstream outfile(s);
 
     // get size of file
     //infile.seekg(0, infile.end);
@@ -97,9 +97,10 @@ void bitstream::writeOut(string code, string* tableBuffer, int tableLength)
             outfile << tableBuffer[i];
             size += tableBuffer[i].size();
             
+            if(i==tableLength-1)
+            break;
             outfile << endl;
         }
-        cout << "output file size: " <<  size << endl;
        
     }
 

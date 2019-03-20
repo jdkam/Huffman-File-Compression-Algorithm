@@ -36,6 +36,7 @@ public:
 
     void readIn(char *a); //reads input and updates freq of characters
 
-    void writeOut(string code, string* tableBuffer, int tableLength);
+    void writeOut(string code, string* tableBuffer, int tableLength, char* s);
 
 };
+
