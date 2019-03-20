@@ -5,8 +5,12 @@
 #include <iostream>
 #include <string>
 
-
 using namespace std;
+
+    void compress();
+
+    void decompress();
+
 
 int main(int argc, char *argv[])
 {
@@ -14,111 +18,251 @@ int main(int argc, char *argv[])
     if (argv[1][0] == '-' && argv[1][1] == 'c')
     {
 
-        double charsize = 0;
-        double codesize = 0;
-        double totalcompressSize = 0;
-        huffmanTree myTree;
-        PriorityQueue<huffmanTree> pq;
-        freqCounter freqTable;
-        bitstream mybitstream;
-        string code;
-        string *tableBuffer = new string[512];
+    //     double charsize = 0;
+    //     double codesize = 0;
+    //     double totalcompressSize = 0;
+    //     huffmanTree myTree;
+    //     PriorityQueue<huffmanTree> pq;
+    //     freqCounter freqTable;
+    //     bitstream mybitstream;
+    //     string code;
+    //     string *tableBuffer = new string[512];
 
-        mybitstream.readIn(argv[2]); //reads in a file in a block
-        int length = mybitstream.getBufferLength();
-        // cout << "\nBuffer length: " << length << endl;
-        char *mybuffer = new char[length];
-        mybuffer = mybitstream.getBuffer();
+    //     ifstream in(argv[2], ios::binary);
 
-        freqCounter *newTable = freqTable.generateTable(length, mybuffer);
-        newTable[256].setFreq(1);
-        int tableLength = freqTable.getUniqueLength();
+    //     //mybitstream.readIn(argv[2]); //reads in a file in a block
+    // if(!in.is_open()){
+    //     cout << "There was an error opening the file" << endl;
+    //     return 1;
+    // }
 
-        unsigned int numberChars = 0;
-        for (unsigned short i = 0; i < 256; i++)
-        {
-            if (newTable[i].getFreq() != 0)
-            {
-                //cout << newTable[i].getChar() << " : " << newTable[i].getFreq() << endl;
-                huffmanTree huff = huffmanTree(newTable[i].getFreq(), newTable[i].getChar());
-                pq.enqueue(huff);
-                numberChars++;
-            }
-        }
-        numberChars--;
+    // in.seekg(0, ios::end);
+    // ifstream::pos_type size = in.tellg();
+    // cout << argv[2] << " -> " << size << " bytes" << endl;
+    // if (size == 0) {
+    //     ofstream of(argv[2]);
+    //     cout << argv[3] << " -> 0 bytes" << endl;
+    //     return 0;
+    // }
 
-        huffmanTree leTree = pq.peek();
-        pq.dequeue();
-        while (!pq.isEmpty())
-        {
-            huffmanTree huff0 = pq.peek();
-            pq.dequeue();
-            huffmanTree huff1(leTree, huff0);
-            pq.enqueue(huff1);
-            leTree = pq.peek();
-            pq.dequeue();
-        }
+    // in.clear();
+    // in.seekg(0,ios::beg);
+    //     int length = mybitstream.getBufferLength();
+    //     //cout << "\nBuffer length: " << length << endl;
+    //     char *mybuffer = new char[length];
+    //     mybuffer = mybitstream.getBuffer();
 
-        //get first letter, then find corresponding index of codeTable and print
-        string *codeTable = new string[257];
+    //     freqCounter *newTable = freqTable.generateTable(length, mybuffer);
+    //     newTable[256].setFreq(1);
+    //     int tableLength = freqTable.getUniqueLength();
 
-        leTree.makeCodeTable(codeTable);
-        //cout << "test********************\n";
+    //     freqCounter f(in);
 
-        ofstream out(argv[3], ios::binary);
-        if (!out.is_open())
-        {
-            return -1;
-        }
+    //     unsigned int numberChars = 0;
 
-        char *numOfCharsPtr = (char *)&numberChars;
+    //     for (unsigned short i = 0; i < 257; i++)
+    //     {
+    //         if (newTable[i].getFreq() != 0)
+    //         {
+    //             unsigned fq = f.getFreqOfChar(i);
+    //             if (fq == 0)
+    //                 continue;
+    //             huffmanTree huff(fq, i);
+    //             pq.enqueue(huff);
+    //             //count the number of chars that appear for later
+    //             numberChars++;
+    //         }
+    //     }
 
-        out.write(numOfCharsPtr, sizeof(unsigned));
+    //     numberChars--;
 
-        char *buffer = new char[numberChars];
-        unsigned *uiBuffer = new unsigned[numberChars * 4];
-        int i = 0;
+    //     huffmanTree leTree = pq.peek();
+    //     pq.dequeue();
+    //     while (!pq.isEmpty())
+    //     {
+    //         huffmanTree huff0 = pq.peek();
+    //         pq.dequeue();
+    //         huffmanTree huff1(leTree, huff0);
+    //         pq.enqueue(huff1);
+    //         leTree = pq.peek();
+    //         pq.dequeue();
+    //     }
 
-        for (unsigned short c = 0; c < 256; c++)
-        {
-            if (codeTable[c].empty())
-                continue;
-            buffer[i] = (unsigned char)c;
-            uiBuffer[i] = newTable[c].getFreq();
-            // cout << codeTable[c] << endl;
-            i++;
-        }
-        out.write(buffer, sizeof(unsigned char) * numberChars);
-        out.write((char *)uiBuffer, sizeof(unsigned) * numberChars);
+    //     //get first letter, then find corresponding index of codeTable and print
+    //     string *codeTable = new string[257];
 
-        delete[] buffer;
-        delete[] uiBuffer;
+    //     leTree.makeCodeTable(codeTable);
+    //     //cout << "test********************\n";
 
-        bitstream bs(codeTable);
-        ifstream in(argv[2], ios::binary);
-        in.clear();
-        in.seekg(0, ios::beg);
-        bool done = false;
-        while (!done)
-        {
+    //     ofstream out(argv[3], ios::binary);
+    //     if (!out.is_open())
+    //     {
+    //         return -1;
+    //     }
 
-            char *buff = bs.getNext(in, &done);
-            out.write(buff, 1);
-        }
-        delete[] codeTable;
+    //     char *numOfCharsPtr = (char *)&numberChars;
 
-        cout << argv[3] << " -> " << out.tellp() << " bytes" << endl;
-        if (length < out.tellp())
-            cout << "*** Size of compressed file > size of source file ***" << endl;
-        out.close();
-        in.close();
-        //read file back
+    //     out.write(numOfCharsPtr, sizeof(unsigned));
+
+    //     char *buffer = new char[numberChars];
+    //     unsigned *uiBuffer = new unsigned[numberChars * 4];
+    //     int i = 0;
+
+    //     for (unsigned short c = 0; c < 256; c++)
+    //     {
+    //         if (codeTable[c].empty())
+    //             continue;
+    //         buffer[i] = (unsigned char)c;
+    //         uiBuffer[i] = f.getFreqOfChar(c);
+    //         // cout << codeTable[c] << endl;
+    //         i++;
+    //     }
+    //     out.write(buffer, sizeof(unsigned char) * numberChars);
+    //     out.write((char *)uiBuffer, sizeof(unsigned) * numberChars);
+
+    //     delete[] buffer;
+    //     delete[] uiBuffer;
+
+    //     bitstream bs(codeTable);
+    //     //ifstream in(argv[2], ios::binary);
+    //     in.clear();
+    //     in.seekg(0, ios::beg);
+    //     bool done = false;
+    //     while (!done)
+    //     {
+
+    //         char *buff = bs.getNext(in, &done);
+    //         out.write(buff, 1);
+    //     }
+    //     delete[] codeTable;
+
+    //     cout << argv[3] << " -> " << out.tellp() << " bytes" << endl;
+    //     if (length < out.tellp())
+    //         cout << "*** Size of compressed file > size of source file ***" << endl;
+        
+    //     in.clear();
+    //     out.close();
+    //     in.close();
+    //     //read file back
+    //     return 0;
+    //     cout << "test**************";
+
+    ifstream in(argv[2],ios::binary);//opening file
+
+    if(!in.is_open()){
+        cout << "There was an error opening the file" << endl;
+        return 1;
+    }
+
+    in.seekg(0, ios::end);
+    ifstream::pos_type size = in.tellg();
+    cout << argv[2] << " -> " << size << " bytes" << endl;
+    if (size == 0) {
+        ofstream of(argv[2]);
+        cout << argv[3] << " -> 0 bytes" << endl;
         return 0;
+    }
+
+    in.clear();
+    in.seekg(0,ios::beg);
+
+    //make frequancy table
+    freqCounter fq(in);
+    PriorityQueue<huffmanTree> q;
+
+    //turn frequencies into weighted huffman trees, and put in priority queue
+    unsigned int numOfChars = 0;
+    for(unsigned short c = 0; c < 257; c++){
+        unsigned f = fq.getFreqOfChar(c);
+        if(f == 0)continue;
+        huffmanTree huff(f,c);
+        q.enqueue(huff);
+        //count the number of chars that appear for later
+        numOfChars++;
+    }
+    numOfChars--;
+
+    //add trees together, and place back into queue until the queue is empty
+    huffmanTree daTree = q.peek();
+    q.dequeue();
+    while(!q.isEmpty()){
+        huffmanTree huff2 = q.peek();
+        q.dequeue();
+        huffmanTree huff3(daTree,huff2);
+        q.enqueue(huff3);
+        daTree = q.peek();
+        q.dequeue();
+    }
+
+    //get codeTable from the huffman tree
+    string* codeTable = new string[257];
+    daTree.makeCodeTable(codeTable);
+
+    //encoding:
+    //encode the number of characters, all of the characters and then all of their frequencies
+    ofstream out(argv[3], ios::binary);
+    if(!out.is_open()){
+        cout << "something went wrong when trying to open huff file" << endl;
+        return 1;
+    }
+
+    char* numOfCharsPtr = (char*)&numOfChars;
+    //write the number of chars
+    out.write(numOfCharsPtr,sizeof(unsigned));
+    //write all of the characters that are
+    char* buffer = new char[numOfChars];
+    unsigned* uiBuffer = new unsigned[numOfChars*4];
+    int i = 0;
+    //we don't write the freq of the null char because the decoder will know its 1
+    for(unsigned short c = 0; c < 256; c++){
+        if(codeTable[c].empty())continue;
+        buffer[i] = (unsigned char)c;
+        uiBuffer[i] = fq.getFreqOfChar(c);
+        i++;
+    }
+
+    out.write(buffer,sizeof(unsigned char)*numOfChars);
+    out.write((char*)uiBuffer,sizeof(unsigned)*numOfChars);
+
+    delete[] buffer;
+    delete[] uiBuffer;
+
+    bitstream bs(codeTable);
+
+    in.clear();
+    in.seekg(0,ios::beg);
+    bool done = false;
+    while(!done){
+        char* buff = bs.getNext(in,&done);
+        out.write(buff,1);
+    }
+    delete[] codeTable;
+
+    cout << argv[3] << " -> " << out.tellp() << " bytes" << endl;
+    if(size < out.tellp()) cout << "*** Size of compressed file > size of source file ***" << endl;
+    out.close();
+    in.close();
+    //read file back
+    return 0;
+
     }
     else if (argv[1][0] == '-' && argv[1][1] == 'd')
     {
         //decompression
         ifstream in(argv[2], ios::binary);
+
+        if (!in)
+            return 1;
+
+        in.seekg(0, ios::end); //read the file
+        if (in.tellg() == 0)
+        {
+            ofstream of(argv[3]);
+            return 0;
+        }
+        in.clear();
+        in.seekg(0, ios::beg);
+
         unsigned n;
         in.read((char *)&n, sizeof(unsigned));
         unsigned int num = n;
@@ -138,21 +282,22 @@ int main(int argc, char *argv[])
         q.enqueue(huffhuff);
 
         //add trees together, and place back into queue until the queue is empty
-        huffmanTree tree = q.peek();
+        huffmanTree daTree = q.peek();
         q.dequeue();
         while (!q.isEmpty())
         {
-            huffmanTree huff4 = q.peek();
+            huffmanTree huff2 = q.peek();
             q.dequeue();
-            huffmanTree huff2(tree, huff4);
-            q.enqueue(huff2);
-            tree = q.peek();
+            huffmanTree huff3(daTree, huff2);
+            q.enqueue(huff3);
+            daTree = q.peek();
             q.dequeue();
         }
+        //std::cout << daTree.returnRoot()->getVal()->getleft() << endl;
 
         string *codeTable = new string[257];
-        tree.makeCodeTable(codeTable); 
-                                            
+        daTree.makeCodeTable(codeTable); //adding everything to the table to push to the file later in order
+                                         //clearing the allocated space
         delete[] buffer;
         delete[] freqs;
         delete[] codeTable;
@@ -160,14 +305,13 @@ int main(int argc, char *argv[])
         ofstream out(argv[3], ios::binary);
 
         bool done = false;
-        char c = tree.getC(in, &done); //
-
+        char c = daTree.getC(in, &done);
         while (!done)
         {
             out.write(&c, sizeof(char));
-            c = tree.getC(in, &done);
+            c = daTree.getC(in, &done);
         }
-        out.close(); 
+        out.close(); //close the file and done!
 
         return 0;
     }

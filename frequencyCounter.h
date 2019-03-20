@@ -19,11 +19,17 @@ class freqCounter{
     string codeWord;
     freqCounter *mytable;
 
+    unsigned* arr;
+
     public:
 
     freqCounter();
+    ~freqCounter();
 
     //freqCounter(const freqCounter & f);
+    freqCounter(std::ifstream& in);
+
+    unsigned getFreqOfChar(unsigned short c);
 
     //getters
     char getChar() const;

@@ -84,7 +84,7 @@ char huffmanTree::getC(std::ifstream& in, bool* done){
     static short n = 8;
     huffmanTree::Node* node = root;
     for( ; ; ) {
-        if(node->getVal() != 512){//check if node is not 0
+        if(node->getVal() != 512){
             if(node->getVal() == 256) 
             *done = true;
             return (char)node->getVal();

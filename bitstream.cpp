@@ -11,8 +11,9 @@ bitstream::bitstream()
 {
     buffer = 0;
     bufferLength = 0;
-    carryOver ="";
+
 }
+
 
 bitstream::bitstream(string* codeTable) {
     this->buffer = new char[1];
@@ -52,8 +53,9 @@ void bitstream::readIn(char* a)
         {
             std::cout << "error: only " << is.gcount() << " could be read";
         }
-        is.close();
-
+        //is.close();
+ is.clear();
+    is.seekg(0,ios::beg);
 
     //used for printing the buffer out
         //cout << "\nLength of buffer is: " << length << endl;
@@ -112,7 +114,7 @@ void bitstream::writeOut(string code, string* tableBuffer, int tableLength, char
     }
 
     outfile.close();
-   // infile.close();
+    //infile.close();
 
     return;
 }

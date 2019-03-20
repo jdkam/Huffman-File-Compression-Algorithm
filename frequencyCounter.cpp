@@ -11,12 +11,31 @@ freqCounter::freqCounter()
     codeWord = "";
 
 }
+unsigned freqCounter::getFreqOfChar(unsigned short c) {
+    return arr[c];
+}
 
-//freqCounter::freqCounter(const freqCounter& f){
- //   
- //   character = f.getChar();
- //   freq = f.getFreq();
-//}
+
+ freqCounter::~freqCounter(){
+     delete[] arr;
+ }
+
+freqCounter::freqCounter(std::ifstream& in) {
+
+    arr = new unsigned[257]{0};
+
+    //if unable to open file
+    if (!in.is_open()) {
+        std::cout << "cannot count unopened file" << std::endl;
+        return;
+    }
+    char c;
+    while (in.get(c)) {
+        arr[(unsigned char) c]++; //saving all freqs
+    }
+    arr[256] = 1;
+
+}
 
 char freqCounter::getChar() const{
     return character;
