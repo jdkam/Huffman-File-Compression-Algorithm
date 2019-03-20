@@ -13,8 +13,8 @@ using namespace std;
 
 class freqCounter{   
     //private members
-    char character;
-    int freq;
+    unsigned char character;
+    unsigned int freq;
     int uniqueLength;
     string codeWord;
     freqCounter *mytable;
@@ -27,7 +27,7 @@ class freqCounter{
 
     //getters
     char getChar() const;
-    int getFreq() const;
+    unsigned int getFreq() const;
     int getUniqueLength() const;
 
 

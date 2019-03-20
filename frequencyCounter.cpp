@@ -22,7 +22,7 @@ char freqCounter::getChar() const{
     return character;
 }
 
-int freqCounter::getFreq() const{
+unsigned int freqCounter::getFreq() const{
     return freq;
 }
 
@@ -52,11 +52,11 @@ freqCounter *freqCounter::getTable(){
 
 freqCounter* freqCounter::generateTable(int length, char *abuffer){
     
-    freqCounter *mytable= new freqCounter[256];
+    freqCounter *mytable= new freqCounter[257];
 
     //initialize ascii values
     //initializing freq table to 0
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < 257; i++)
     {
         mytable[i].setChar(i);
         mytable[i].setFreq(0);

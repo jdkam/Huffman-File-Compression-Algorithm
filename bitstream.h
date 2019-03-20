@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-
+#include <fstream>
 #include "frequencyCounter.h"
 
 using namespace std;
@@ -11,6 +11,9 @@ class bitstream
 {
     char * buffer;
     int bufferLength;
+
+    string *codeTable;
+    string carryOver;
 
 public:
 
@@ -28,6 +31,7 @@ public:
     bitstream();
     ~bitstream(); //destructor
 
+     bitstream(string* codeTable);
     int getBufferLength() const;
     void setBufferLength(const int aLength);
 
@@ -38,5 +42,6 @@ public:
 
     void writeOut(string code, string* tableBuffer, int tableLength, char* s);
 
+    char* getNext(std::ifstream& in, bool* done);
 };
 

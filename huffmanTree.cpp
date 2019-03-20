@@ -8,9 +8,10 @@ huffmanTree::huffmanTree()
 {
     this->weight = 0;
     this->root = NULL;
+    this->height = 0;
 }
 
-huffmanTree::huffmanTree(unsigned weight, char c)
+huffmanTree::huffmanTree(unsigned weight, unsigned short c)
 {
     root = new Node(c);
     this->weight = weight;
@@ -20,8 +21,8 @@ huffmanTree::huffmanTree(unsigned weight, char c)
 huffmanTree::huffmanTree(const huffmanTree &a, const huffmanTree &b)
 {
     this->weight = a.weight + b.weight;
-    this->height = (a.height > b.height) ? a.height : b.height + 1;
-    this->root = new Node(0);
+    this->height = (a.height > b.height) ? a.height+1 : b.height + 1;
+    this->root = new Node(512);
     this->root->attachNodes(a.root, b.root);
 }
 
@@ -35,7 +36,7 @@ bool operator>(const huffmanTree &a, const huffmanTree &b)
     return a.weight > b.weight;
 }
 
-huffmanTree::Node::Node(char val) {
+huffmanTree::Node::Node(unsigned short val) {
     this->val = val;
     this->left = nullptr;
     this->right = nullptr;
@@ -52,7 +53,7 @@ void huffmanTree::Node::attachNodes(huffmanTree::Node *left, huffmanTree::Node *
     this->right = right;
 }
 
-char huffmanTree::Node::getVal()
+unsigned short huffmanTree::Node::getVal()
 {
     return val;
 }
@@ -79,17 +80,15 @@ void huffmanTree::makeCodeTable(std::string *table){
 
 //Gets the next char from the tree to decode
 char huffmanTree::getC(std::ifstream& in, bool* done){
-     char c;
-     short n = 8;
-
+     static char c;
+    static short n = 8;
     huffmanTree::Node* node = root;
-
     for( ; ; ) {
-        if(node->getVal() != 0){ //check if node is not 0
-            if(node->getVal() == 256) *done = true;
-            return node->getVal();
+        if(node->getVal() != 512){//check if node is not 0
+            if(node->getVal() == 256) 
+            *done = true;
+            return (char)node->getVal();
         }
-
         if(n >= 8){
             if(!in.get(c)){
                 *done = true;
@@ -97,24 +96,19 @@ char huffmanTree::getC(std::ifstream& in, bool* done){
             }
             n = 0;
         }
-
-        int path = 0x100 & c;
-        if (path){
+        int path = 0x80 & c;
+        if (path)
             node = node->getright();
-        }
         else
-        {
             node = node->getleft();
-        }
         c <<= 1;
-
         n++;
     }
 
 }
 //Used to put the poppulate the tree
 void huffmanTree::code(huffmanTree::Node* root, char* s,unsigned n,std::string table[]) {
-    if(root->getVal() != 0){
+    if(root->getVal() != 512){
         std::string code;
         s[n] = 0;
         code = s;

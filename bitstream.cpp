@@ -1,6 +1,6 @@
 #include "bitstream.h"
 #include <iostream>
-#include <string>
+
 #include <fstream>
 #include <istream>
 #include "frequencyCounter.h"
@@ -11,12 +11,19 @@ bitstream::bitstream()
 {
     buffer = 0;
     bufferLength = 0;
+    carryOver ="";
+}
+
+bitstream::bitstream(string* codeTable) {
+    this->buffer = new char[1];
+    this->codeTable = codeTable;
 }
 
 void bitstream::readIn(char* a)
 {
 
     std::ifstream is(a, std::ifstream::binary);
+    
     if (is)
     {
         // get length of file:
@@ -50,16 +57,16 @@ void bitstream::readIn(char* a)
 
     //used for printing the buffer out
         //cout << "\nLength of buffer is: " << length << endl;
-        //for (int i = 0; i < length; i++)
+        //for (int i = 0; lengthi++)
         //{
-        //    cout << buffer[i];
+        //    cout << bufflength
         //}
 
-        //return *buffer; //return a ptr to buffer
+        //return *buffer; lengthtr to buffer
 
-        // ...buffer contains the entire file...
+        // ...buffer contalengthre file...
 
-        //delete[] buffer;
+        //delete[] buffer;length
     }
 }
 
@@ -110,6 +117,43 @@ void bitstream::writeOut(string code, string* tableBuffer, int tableLength, char
     return;
 }
 
+char* bitstream::getNext(std::ifstream& in, bool* done) {
+    static bool onEof;
+    unsigned char buff = 0; // buff al 0s.
+    char c;
+    std::string code = carryOver;
+    int i = 0;
+    for( ; ; ) {
+        for (unsigned j = 0; j < code.length(); j++) {
+            i++;
+            buff <<= 1; // right shift buff.
+            if (code.at(j) == '1')buff |= 0x1;  // checks if the string code has '1' at jth position and makes buff = 1 if it does
+            if (i >= 8) {   //when i is at least 8, change carryover to the changed code from above
+                carryOver = code.substr(j + 1);
+                break; //move out of the nested loop
+            }
+        }
+        if (i >= 8)break; // move out of the final loop.
+
+        if(onEof){  //if file ends
+            *done = true;
+            buff <<= (8-i); // if the last 8 bits not complete, we shift it.
+            break;
+        }
+
+        if (!in.get(c)) {
+            code = codeTable[256];
+            onEof = true;
+        } else {
+            code = codeTable[(unsigned char)c];
+        }
+    }
+
+    *buffer = buff;
+    return buffer;
+}
+
+
 int bitstream::getBufferLength() const{
     return bufferLength;
 }
@@ -129,3 +173,4 @@ void bitstream::setBuffer( char *aBuffer){
 bitstream::~bitstream(){
     delete[] buffer;
 }
+

@@ -14,11 +14,11 @@ class huffmanTree
       private:
         Node *left;
         Node *right;
-        char val;
+        unsigned short val;
 
       public:
-        Node(char val);
-        char getVal();
+        Node(unsigned short val);
+        unsigned short getVal();
         Node *getleft();
         Node *getright();
         void attachNodes(Node *a, Node *b);
@@ -32,7 +32,7 @@ class huffmanTree
 
     huffmanTree(const huffmanTree &a, const huffmanTree &b);
 
-    huffmanTree(unsigned weight, char c);
+    huffmanTree(unsigned weight, unsigned short c);
 
     huffmanTree();
 
