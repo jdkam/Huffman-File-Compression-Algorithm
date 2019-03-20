@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
             cout << huffcode << endl;
 
-            int j = 0;
+            int numofchar = 0;
             while (!(is.eof()))
             {
                 int i = 1;
@@ -141,24 +141,24 @@ int main(int argc, char *argv[])
                     zerosOnes += mapLine[i];
                     i++;
                 }
-                str[j] = zerosOnes;
+                str[numofchar] = zerosOnes;
 
-                chararr[j] = c;
+                chararr[numofchar] = c;
                 cout << "The first character is: " << c << endl;
                 cout << "The corresponding numbers are: " << zerosOnes << endl
                      << endl;
-                j++;
+                numofchar++;
             }
-            cout << "printing array" << endl;
 
-            for (int i = 0; i < 4; i++)
-            {
-                if (str[i] != "")
-                {
-                    cout << "char " << chararr[i];
-                    cout << " " << str[i] << endl;
-                }
-            }
+            // cout << "printing array" << endl;
+            // for (int i = 0; i < 256; i++)
+            // {
+            //     if (str[i] != "")
+            //     {
+            //         cout << "char " << chararr[i];
+            //         cout << " " << str[i] << endl;
+            //     }
+            // }
         }
     }
     else
