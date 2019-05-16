@@ -1,0 +1,10 @@
+This is the Huffman Tree compression/decompression algorithm. It was last tested and working on Linux, using g++ 
+compiler and the included makefile.
+Use the testdriver file to run the code.
+In linux command terminal you can type:
+
+"./huff -c filename" for compression
+
+or 
+
+"./huff -d filename.huff" for decompression
