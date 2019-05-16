@@ -3,8 +3,8 @@ compiler and the included makefile.
 Use the testdriver file to run the code.
 In linux command terminal you can type:
 
-"./huff -c filename" for compression
+"./huff -c filename.txt outputfilename" for compression
 
 or 
 
-"./huff -d filename.huff" for decompression
+"./huff -d filename.huff outputfilename.txt" for decompression
