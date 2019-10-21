@@ -18,7 +18,7 @@ Use the testdriver file to run the code.
 In linux command terminal you can type:
 
 ```
-"./huff -c filename.txt outputfilename" for compression
+"./huff -c filename.txt outputfilename.huff" for compression
 
 or 
 
